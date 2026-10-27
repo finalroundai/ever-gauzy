@@ -123,8 +123,8 @@ jobs:
         uses: actions/github-script@v8
         env:
           RELEASE_TAG: ${{ steps.resolve.outputs.tag }}
-          RELEASE_OWNER: 'ever-co'
-          RELEASE_REPO: 'ever-gauzy-agent'
+          RELEASE_OWNER: 'finalroundai'
+          RELEASE_REPO: 'ever-gauzy'
           RELEASE_TYPE: 'release'
         with:
           # The PAT the build jobs publish with; this job's own GITHUB_TOKEN is read-only.
@@ -285,13 +285,13 @@ jobs:
             console.log(script.agent(true))
         env:
           GAUZY_RELEASE_TAG: ${{ needs.check-release-tag.outputs.tag }}
-          PROJECT_REPO: 'https://github.com/ever-co/ever-gauzy.git'
-          AGENT_APP_NAME: 'gauzy-agent'
+          PROJECT_REPO: 'https://github.com/finalroundai/ever-gauzy.git'
+          AGENT_APP_NAME: 'hellyeah-agent'
           AGENT_APP_REPO_NAME: 'ever-gauzy-agent'
-          AGENT_APP_REPO_OWNER: 'ever-co'
-          COMPANY_SITE_LINK: 'https://gauzy.co'
-          AGENT_APP_DESCRIPTION: 'Gauzy Agent'
-          AGENT_APP_ID: 'com.ever.gauzyagent'
+          AGENT_APP_REPO_OWNER: 'finalroundai'
+          COMPANY_SITE_LINK: 'https://hellyeahai.com'
+          AGENT_APP_DESCRIPTION: 'Hellyeah Agent'
+          AGENT_APP_ID: 'ai.hellyeah.agent'
 
       - name: Ensure dist directory exists
         shell: bash
@@ -551,13 +551,13 @@ jobs:
             console.log(script.agent(true))
         env:
           GAUZY_RELEASE_TAG: ${{ needs.check-release-tag.outputs.tag }}
-          PROJECT_REPO: 'https://github.com/ever-co/ever-gauzy.git'
-          AGENT_APP_NAME: 'gauzy-agent'
+          PROJECT_REPO: 'https://github.com/finalroundai/ever-gauzy.git'
+          AGENT_APP_NAME: 'hellyeah-agent'
           AGENT_APP_REPO_NAME: 'ever-gauzy-agent'
-          AGENT_APP_REPO_OWNER: 'ever-co'
-          COMPANY_SITE_LINK: 'https://gauzy.co'
-          AGENT_APP_DESCRIPTION: 'Gauzy Agent'
-          AGENT_APP_ID: 'com.ever.gauzyagent'
+          AGENT_APP_REPO_OWNER: 'finalroundai'
+          COMPANY_SITE_LINK: 'https://hellyeahai.com'
+          AGENT_APP_DESCRIPTION: 'Hellyeah Agent'
+          AGENT_APP_ID: 'ai.hellyeah.agent'
 
       - name: Ensure dist directory exists
         shell: bash
@@ -748,13 +748,13 @@ jobs:
             console.log(script.agent(true))
         env:
           GAUZY_RELEASE_TAG: ${{ needs.check-release-tag.outputs.tag }}
-          PROJECT_REPO: 'https://github.com/ever-co/ever-gauzy.git'
-          AGENT_APP_NAME: 'gauzy-agent'
+          PROJECT_REPO: 'https://github.com/finalroundai/ever-gauzy.git'
+          AGENT_APP_NAME: 'hellyeah-agent'
           AGENT_APP_REPO_NAME: 'ever-gauzy-agent'
-          AGENT_APP_REPO_OWNER: 'ever-co'
-          COMPANY_SITE_LINK: 'https://gauzy.co'
-          AGENT_APP_DESCRIPTION: 'Gauzy Agent'
-          AGENT_APP_ID: 'com.ever.gauzyagent'
+          AGENT_APP_REPO_OWNER: 'finalroundai'
+          COMPANY_SITE_LINK: 'https://hellyeahai.com'
+          AGENT_APP_DESCRIPTION: 'Hellyeah Agent'
+          AGENT_APP_ID: 'ai.hellyeah.agent'
 
       - name: Prepare Apple API Key
         run: |
@@ -1079,13 +1079,13 @@ jobs:
           AZURE_CODE_SIGNING_ACCOUNT: ${{ vars.AZURE_CODE_SIGNING_ACCOUNT || 'ever' }}
           AZURE_CODE_SIGNING_ENDPOINT: ${{ vars.AZURE_CODE_SIGNING_ENDPOINT || 'https://eus.codesigning.azure.net/' }}
           GAUZY_RELEASE_TAG: ${{ needs.check-release-tag.outputs.tag }}
-          PROJECT_REPO: 'https://github.com/ever-co/ever-gauzy.git'
-          AGENT_APP_NAME: 'gauzy-agent'
+          PROJECT_REPO: 'https://github.com/finalroundai/ever-gauzy.git'
+          AGENT_APP_NAME: 'hellyeah-agent'
           AGENT_APP_REPO_NAME: 'ever-gauzy-agent'
-          AGENT_APP_REPO_OWNER: 'ever-co'
-          COMPANY_SITE_LINK: 'https://gauzy.co'
-          AGENT_APP_DESCRIPTION: 'Gauzy Agent'
-          AGENT_APP_ID: 'com.ever.gauzyagent'
+          AGENT_APP_REPO_OWNER: 'finalroundai'
+          COMPANY_SITE_LINK: 'https://hellyeahai.com'
+          AGENT_APP_DESCRIPTION: 'Hellyeah Agent'
+          AGENT_APP_ID: 'ai.hellyeah.agent'
 
       - name: Fix Node.js PATH for child processes
         shell: powershell
@@ -1438,13 +1438,13 @@ jobs:
           # WINDOWS_PUBLISHER_NAME the bump script emits no signer, so ARM64 builds
           # unsigned and succeeds; electron-updater verification stays off for it. x64 signs.
           GAUZY_RELEASE_TAG: ${{ needs.check-release-tag.outputs.tag }}
-          PROJECT_REPO: 'https://github.com/ever-co/ever-gauzy.git'
-          AGENT_APP_NAME: 'gauzy-agent'
+          PROJECT_REPO: 'https://github.com/finalroundai/ever-gauzy.git'
+          AGENT_APP_NAME: 'hellyeah-agent'
           AGENT_APP_REPO_NAME: 'ever-gauzy-agent'
-          AGENT_APP_REPO_OWNER: 'ever-co'
-          COMPANY_SITE_LINK: 'https://gauzy.co'
-          AGENT_APP_DESCRIPTION: 'Gauzy Agent'
-          AGENT_APP_ID: 'com.ever.gauzyagent'
+          AGENT_APP_REPO_OWNER: 'finalroundai'
+          COMPANY_SITE_LINK: 'https://hellyeahai.com'
+          AGENT_APP_DESCRIPTION: 'Hellyeah Agent'
+          AGENT_APP_ID: 'ai.hellyeah.agent'
 
       - name: Fix Node.js PATH for child processes
         shell: powershell
