@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 concurrency:
   # Serialize releases on a ref, but NEVER cancel one: this job takes about a minute, so
