@@ -2,6 +2,7 @@ import { app, ipcMain, systemPreferences, powerMonitor } from 'electron';
 import * as path from 'path';
 import { promises as fs } from 'fs';
 import { logger as log, store } from '@gauzy/desktop-core';
+import { applyProvisioning } from './provision';
 import {
 	AppError,
 	LocalStore,
@@ -164,6 +165,7 @@ async function ensureScreenshotDir(): Promise<void> {
 
 async function appReady() {
 	await ensureScreenshotDir();
+	await applyProvisioning(store as any);
 	const configs: any = store.get('configs');
 	const settings = getAppSetting();
 	if (!settings || (!Object.keys(settings).length)) {
