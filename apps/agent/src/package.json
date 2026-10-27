@@ -20,9 +20,9 @@
 	},
 	"main": "index.js",
 	"build": {
-		"appId": "com.ever.gauzyagent",
+		"appId": "ai.hellyeah.agent",
 		"artifactName": "${name}-${arch}-${version}.${ext}",
-		"productName": "Gauzy Agent",
+		"productName": "Hellyeah Agent",
 		"copyright": "Copyright © 2019-Present. Ever Co. LTD",
 		"beforeBuild": "tools/electron/before-build.js",
 		"afterSign": "tools/notarize.js",
@@ -40,7 +40,7 @@
 		"publish": [
 			{
 				"provider": "github",
-				"repo": "ever-gauzy-agent",
+				"repo": "finalroundai/ever-gauzy",
 				"releaseType": "release"
 			}
 		],
@@ -62,6 +62,7 @@
 			"entitlements": "tools/build/entitlements.mas.plist",
 			"entitlementsInherit": "tools/build/entitlements.mas.plist",
 			"extendInfo": {
+				"LSUIElement": true,
 				"NSAppleEventsUsageDescription": "This app requires access to script browser applications to detect the current URL when triggering instant lookup.",
 				"NSCameraUsageDescription": "Please allow access to the device camera to capture images and videos.",
 				"NSMicrophoneUsageDescription": "Please allow access to the device's microphone to capture audio and voice recordings.",
