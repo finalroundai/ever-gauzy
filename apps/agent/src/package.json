@@ -80,6 +80,7 @@
 			"icon": "linux",
 			"target": [
 				"deb",
+				"snap",
 				"tar.gz",
 				"rpm",
 				"AppImage",
