@@ -933,11 +933,7 @@ jobs:
   release-windows:
     needs: check-release-tag
     runs-on: ${{ matrix.os }}
-    # No self-hosted Windows runner is registered on this fork yet, so the job
-    # would queue forever. Time it out fast and don't fail the whole run; flip
-    # this off once a Windows X64 runner registers.
-    timeout-minutes: 5
-    continue-on-error: true
+    timeout-minutes: 300
 
     strategy:
       matrix:
