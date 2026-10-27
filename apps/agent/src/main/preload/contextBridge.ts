@@ -21,7 +21,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
 			getVersion: () => remote.app.getVersion()
 		}
 	},
-	log: ElectronLog,
+	log: {
+		error: (...args: any[]) => ElectronLog.error(...args),
+		warn: (...args: any[]) => ElectronLog.warn(...args),
+		info: (...args: any[]) => ElectronLog.info(...args),
+		debug: (...args: any[]) => ElectronLog.debug(...args)
+	},
 });
 
 if (process.env.NODE_ENV === 'development') {
