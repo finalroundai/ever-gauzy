@@ -1,0 +1,77 @@
+name: Agent Mac PKG (unsigned, Fleet pilot)
+
+# Builds an unsigned Hellyeah Agent .pkg (arm64 + x64) as an Actions artifact for
+# upload to Fleet. No release, no publish. Replace with the signed prod job once
+# Apple signing secrets exist.
+on:
+  push:
+    branches: [fleet-mac-pkg]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mac-pkg:
+    runs-on: macos-15
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26.12.1
+
+      - name: Fix node-gyp and Python
+        run: python3 -m pip install --break-system-packages packaging setuptools || python3 -m pip install packaging setuptools
+
+      - run: sudo npm install -g npm@11.6.2
+      - run: sudo npm install --quiet -g node-gyp@10.2.0 ts-node@10.9.2 nx@^22.5.2
+
+      - name: Configure Registry
+        uses: ./.github/actions/configure-registry
+        with:
+          verdaccio-registry: ${{ vars.VERDACCIO_REGISTRY }}
+          verdaccio-token: ${{ secrets.VERDACCIO_TOKEN }}
+          force-public: ${{ vars.VERDACCIO_FORCE_PUBLIC }}
+          expect-vip: false
+
+      - run: yarn install --network-timeout 1000000 --frozen-lockfile --ignore-scripts
+      - run: yarn postinstall.manual
+
+      - name: Bump Agent version
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const script = require('./.scripts/bump-version-electron.js')
+            console.log(script.agent(true))
+        env:
+          GAUZY_RELEASE_TAG: v111.138.5
+          PROJECT_REPO: 'https://github.com/finalroundai/ever-gauzy.git'
+          AGENT_APP_NAME: 'hellyeah-agent'
+          AGENT_APP_REPO_NAME: 'ever-gauzy-agent'
+          AGENT_APP_REPO_OWNER: 'finalroundai'
+          COMPANY_SITE_LINK: 'https://hellyeahai.com'
+          AGENT_APP_DESCRIPTION: 'Hellyeah Agent'
+          AGENT_APP_ID: 'ai.hellyeah.agent'
+
+      - run: mkdir -p dist/packages
+
+      - name: Build Agent pkg
+        run: |
+          yarn run build:agent
+          npm config set cache .cache
+          yarn electron-builder -c.electronVersion=44.9.3 build --mac pkg --arm64 --x64 \
+            --publish=never -c.mac.identity=null -c.mac.notarize=false --project dist/apps/agent
+        env:
+          USE_HARD_LINKS: false
+          NX_NO_CLOUD: true
+          NX_DAEMON: false
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hellyeah-agent-mac-pkg
+          path: dist/apps/agent-packages/*.pkg
+          if-no-files-found: error
+          retention-days: 14
