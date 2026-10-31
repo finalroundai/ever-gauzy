@@ -15,6 +15,16 @@ jobs:
   mac-pkg:
     runs-on: macos-15
     timeout-minutes: 180
+    # Job-level: the bump step AND the packer inside build:agent both read these;
+    # .scripts/env.ts defaults them to the Ever values otherwise.
+    env:
+      PROJECT_REPO: 'https://github.com/finalroundai/ever-gauzy.git'
+      AGENT_APP_NAME: 'hellyeah-agent'
+      AGENT_APP_REPO_NAME: 'ever-gauzy-agent'
+      AGENT_APP_REPO_OWNER: 'finalroundai'
+      COMPANY_SITE_LINK: 'https://hellyeahai.com'
+      AGENT_APP_DESCRIPTION: 'Hellyeah Agent'
+      AGENT_APP_ID: 'ai.hellyeah.agent'
     steps:
       - uses: actions/checkout@v5
 
@@ -47,13 +57,6 @@ jobs:
             console.log(script.agent(true))
         env:
           GAUZY_RELEASE_TAG: v111.138.5
-          PROJECT_REPO: 'https://github.com/finalroundai/ever-gauzy.git'
-          AGENT_APP_NAME: 'hellyeah-agent'
-          AGENT_APP_REPO_NAME: 'ever-gauzy-agent'
-          AGENT_APP_REPO_OWNER: 'finalroundai'
-          COMPANY_SITE_LINK: 'https://hellyeahai.com'
-          AGENT_APP_DESCRIPTION: 'Hellyeah Agent'
-          AGENT_APP_ID: 'ai.hellyeah.agent'
 
       - run: mkdir -p dist/packages
 
