@@ -14,7 +14,8 @@ import {
 	getApiBaseUrl,
 	getAuthConfig,
 	getTrayIcon,
-	getAppSetting
+	getAppSetting,
+	getInitialConfig
 } from '../util';
 import AppWindow from '../window-manager';
 import TrayMenu from '../tray';
@@ -348,6 +349,22 @@ export async function InitApp() {
 					message: error.message
 				}
 			});
+		}
+	});
+
+	/*
+	 * Un-killable daemon mode (Teramind-like): when the server sets
+	 * allowAgentAppExit=false, block every quit attempt (tray, menu,
+	 * Cmd+Q, Dock quit). Force Quit / SIGKILL is macOS itself and
+	 * remains the user's escape hatch.
+	 */
+	app.on('before-quit', (event) => {
+		const appSetting = getAppSetting();
+		const appConfig = getInitialConfig();
+		const authConfig = getAuthConfig();
+		const exitAllowed = appSetting?.allowAgentAppExit || !appConfig?.isSetup || !authConfig?.token;
+		if (!exitAllowed) {
+			event.preventDefault();
 		}
 	});
 

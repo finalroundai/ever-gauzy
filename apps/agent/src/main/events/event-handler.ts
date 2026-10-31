@@ -215,6 +215,13 @@ export default class EventHandler {
 	}
 
 	private async stopAndExit() {
+		const appSetting = getAppSetting();
+		const appConfig = getInitialConfig();
+		const authConfig = getAuthConfig();
+		if (!(appSetting?.allowAgentAppExit || !appConfig?.isSetup || !authConfig?.token)) {
+			await this.exitDialog();
+			return;
+		}
 		await this.stopAppTracking();
 		app.quit();
 	}
