@@ -170,6 +170,20 @@ async function appReady() {
 		launchAtStartup(true, false);
 		LocalStore.setAllDefaultConfig();
 
+		/*
+		 * Pre-seeded server URL (e.g. https://api.work.frai.pro): fleet-managed
+		 * installs skip the setup window entirely and go straight to sign-in.
+		 */
+		if (environment.AGENT_SERVER_URL) {
+			LocalStore.updateConfigSetting({
+				serverUrl: environment.AGENT_SERVER_URL,
+				isSetup: true
+			});
+			configs.serverUrl = environment.AGENT_SERVER_URL;
+			configs.isSetup = true;
+		}
+
+
 		/* Set default application setting for agent app. */
 		LocalStore.updateApplicationSetting({
 			screenshotNotification: false,

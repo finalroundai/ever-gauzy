@@ -25,6 +25,7 @@ jobs:
       COMPANY_SITE_LINK: 'https://hellyeahai.com'
       AGENT_APP_DESCRIPTION: 'Hellyeah Agent'
       AGENT_APP_ID: 'ai.hellyeah.agent'
+      AGENT_SERVER_URL: 'https://api.work.frai.pro'
     steps:
       - uses: actions/checkout@v5
 
