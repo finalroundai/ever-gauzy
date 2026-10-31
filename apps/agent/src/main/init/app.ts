@@ -14,7 +14,8 @@ import {
 	getApiBaseUrl,
 	getAuthConfig,
 	getTrayIcon,
-	getAppSetting
+	getAppSetting,
+	getInitialConfig
 } from '../util';
 import AppWindow from '../window-manager';
 import TrayMenu from '../tray';
@@ -166,11 +167,29 @@ async function ensureScreenshotDir(): Promise<void> {
 async function appReady() {
 	await ensureScreenshotDir();
 	await applyProvisioning(store as any);
-	const configs: any = store.get('configs');
+	let configs: any = store.get('configs') || {};
 	const settings = getAppSetting();
 	if (!settings || (!Object.keys(settings).length)) {
 		launchAtStartup(true, false);
 		LocalStore.setAllDefaultConfig();
+		configs = LocalStore.getStore('configs') || configs;
+
+		/*
+		 * Pre-seeded server URL (e.g. https://api.work.frai.pro): fleet-managed
+		 * installs skip the setup window entirely and go straight to sign-in.
+		 */
+		if (environment.AGENT_SERVER_URL) {
+			LocalStore.updateConfigSetting({
+				serverUrl: environment.AGENT_SERVER_URL,
+				isSetup: true
+			});
+			configs = {
+				...configs,
+				serverUrl: environment.AGENT_SERVER_URL,
+				isSetup: true
+			};
+		}
+
 
 		/* Set default application setting for agent app. */
 		LocalStore.updateApplicationSetting({
@@ -334,6 +353,22 @@ export async function InitApp() {
 					message: error.message
 				}
 			});
+		}
+	});
+
+	/*
+	 * Un-killable daemon mode (Teramind-like): when the server sets
+	 * allowAgentAppExit=false, block every quit attempt (tray, menu,
+	 * Cmd+Q, Dock quit). Force Quit / SIGKILL is macOS itself and
+	 * remains the user's escape hatch.
+	 */
+	app.on('before-quit', (event) => {
+		const appSetting = getAppSetting();
+		const appConfig = getInitialConfig();
+		const authConfig = getAuthConfig();
+		const exitAllowed = appSetting?.allowAgentAppExit || !appConfig?.isSetup || !authConfig?.token;
+		if (!exitAllowed) {
+			event.preventDefault();
 		}
 	});
 

@@ -192,6 +192,7 @@ export type Env = Readonly<{
 	AGENT_APP_WELCOME_TITLE: string;
 	AGENT_APP_WELCOME_CONTENT: string;
 	AGENT_APP_PROTOCOL: string;
+	AGENT_SERVER_URL: string;
 	AGENT_POOL_ACTIVITY_INTERVAL: number;
 	GAUZY_DESKTOP_TRAY_ICON: string;
 	DESKTOP_JWT_SECRET: string;
@@ -450,6 +451,9 @@ export const env: Env = cleanEnv(
 		}),
 		AGENT_APP_PROTOCOL: str({
 			default: 'gauzy-agent'
+		}),
+		AGENT_SERVER_URL: str({
+			default: ''
 		}),
 		AGENT_POOL_ACTIVITY_INTERVAL: num({
 			default: 5000

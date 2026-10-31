@@ -142,6 +142,7 @@ export interface Environment {
 	AGENT_APP_WELCOME_TITLE: string;
 	AGENT_APP_WELCOME_CONTENT: string;
 	AGENT_APP_PROTOCOL: string;
+	AGENT_SERVER_URL: string;
 
 	REGISTER_URL: string;
 	FORGOT_PASSWORD_URL: string;
