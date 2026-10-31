@@ -167,11 +167,12 @@ async function ensureScreenshotDir(): Promise<void> {
 async function appReady() {
 	await ensureScreenshotDir();
 	await applyProvisioning(store as any);
-	const configs: any = store.get('configs');
+	let configs: any = store.get('configs') || {};
 	const settings = getAppSetting();
 	if (!settings || (!Object.keys(settings).length)) {
 		launchAtStartup(true, false);
 		LocalStore.setAllDefaultConfig();
+		configs = LocalStore.getStore('configs') || configs;
 
 		/*
 		 * Pre-seeded server URL (e.g. https://api.work.frai.pro): fleet-managed
@@ -182,8 +183,11 @@ async function appReady() {
 				serverUrl: environment.AGENT_SERVER_URL,
 				isSetup: true
 			});
-			configs.serverUrl = environment.AGENT_SERVER_URL;
-			configs.isSetup = true;
+			configs = {
+				...configs,
+				serverUrl: environment.AGENT_SERVER_URL,
+				isSetup: true
+			};
 		}
 
 
