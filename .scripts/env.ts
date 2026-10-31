@@ -450,10 +450,10 @@ export const env: Env = cleanEnv(
 			default: ''
 		}),
 		AGENT_APP_PROTOCOL: str({
+			default: 'gauzy-agent'
+		}),
 		AGENT_SERVER_URL: str({
 			default: ''
-		}),
-			default: 'gauzy-agent'
 		}),
 		AGENT_POOL_ACTIVITY_INTERVAL: num({
 			default: 5000
